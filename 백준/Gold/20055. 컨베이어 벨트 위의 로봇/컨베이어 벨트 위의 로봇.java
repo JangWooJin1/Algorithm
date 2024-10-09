@@ -42,7 +42,7 @@ public class Main {
 
     //1. 벨트 이동
     public static void moveBelt(){
-        Belt now = belts.get(2*n-1);
+        Belt now = belts.remove(2*n-1);
         belts.add(0,now);
 
         belts.get(n-1).robot = false;
@@ -51,9 +51,10 @@ public class Main {
     //2. 로봇 이동
     public static void moveRobot(){
         //0~n-1 벨트 탐색 (역순 탐색)
-        for(int i=n-1; i>0; i--){
-            Belt next = belts.get(i);
-            Belt now = belts.get(i-1);
+        ListIterator<Belt> iter = belts.listIterator(n);
+        Belt next = iter.previous();
+        while(iter.hasPrevious()){
+            Belt now = iter.previous();
 
             //다음칸으로 이동이 가능한 경우
             if(!next.robot && now.robot && next.count > 0){
@@ -65,6 +66,8 @@ public class Main {
                     fail++;
                 }
             }
+            
+            next = now;
         }
 
         belts.get(n-1).robot = false;
@@ -95,11 +98,5 @@ public class Main {
             count = c;
             robot = false;
         }
-
-        public String toString(){
-            return "(" + count + ", " +robot + ") ";
-        }
     }
-
-
 }
