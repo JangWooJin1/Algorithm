@@ -39,7 +39,7 @@ public class Main {
             return;
         }
 
-        used[now] = true;
+ 
 
         for(int i=0; i<=9; i++){
             if(used[i]){
@@ -56,20 +56,11 @@ public class Main {
                     continue;
                 }
             }
-            dfs(str + i, copyArr(used), cnt + 1, i);
+            used[i] = true;
+            dfs(str + i, used, cnt + 1, i);
+            used[i] = false;
         }
 
+
     }
-
-    static boolean[] copyArr(boolean[] arr){
-        boolean[] new_arr = new boolean[arr.length];
-
-        for(int i=0; i<arr.length; i++){
-            new_arr[i] = arr[i];
-        }
-
-        return new_arr;
-    }
-
-
 }
